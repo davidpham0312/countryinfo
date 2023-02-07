@@ -22,15 +22,15 @@ export const useApiGet = (url: string): ApiResponseProps => {
       setStatus(response.status);
       setStatusText(response.statusText);
       setData(json);
-    } catch (err) {
-      setError(err);
+    } catch (error) {
+      setError(error);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     getAPIData();
-  })
+  }, []);
 
-  return { status, statusText, data, error, loading }
+  return { status, statusText, data, error, loading };
 };
