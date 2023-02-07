@@ -1,25 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { ApiResponseProps, useApiGet } from './hooks/useAPIHook';
+import { Header } from './components/Header';
+import { CountryList } from './components//CountryList';
 
 function App() {
+  
+  const dict = {"languages": {"ara": "Arabic", "som":"Somali"}}
+
+  const data: ApiResponseProps = useApiGet('https://restcountries.com/v3.1/all')
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <section>
+
+    <Header/>
+    <div>{(!data.loading) ? <CountryList listCollection={data.data}/>: "Loading..."}
     </div>
+    </section>
   );
 }
 

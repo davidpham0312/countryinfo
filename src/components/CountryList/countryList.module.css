@@ -1,0 +1,16 @@
+.country_list__single_country {
+  margin: 10px;
+  display: inline-grid;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: aqua;
+  border-radius: 10px;
+  
+}
+
+.country_list__name,
+.country_list__region,
+.country_list__population {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
