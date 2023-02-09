@@ -1,11 +1,12 @@
 .list_head__container{
   display: grid;
-  grid-template-columns: 150px repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   border-radius: 10px;
   border: 1px solid black;
   margin-bottom: 20px;
   padding: 20px 10px 20px;
-  background-color: blanchedalmond;
+  background-color: #d7d6d4;
+  font-weight: bold;
 }
 
 .list_head__button{

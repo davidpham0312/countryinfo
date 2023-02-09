@@ -4,19 +4,11 @@ country_list__container {
   grid-template-rows: auto;
 }
 
-.country_list__title {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-radius: 10px;
-  border: 1px solid black;
-  margin-bottom: 20px;
-  padding: 10px 0px;
-}
 
 .country_list__single_country {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  background-color: #00ffff;
+  background-color: #aed5e4;
   border-radius: 10px;
   border: 2px solid black;
   margin-bottom: 10px;

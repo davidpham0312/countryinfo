@@ -57,7 +57,6 @@ export const CountryList: React.FC<CountryListProps> = ({ listCollection }) => {
       <List className={styles.country_list__container}>
         <Search handleChange={handleSearchChange} />
         <ListHead
-          className={styles.country_list__title}
           nameButtonClicked={nameButtonClicked}
           nameAscending={nameAscending}
         />
@@ -67,7 +66,7 @@ export const CountryList: React.FC<CountryListProps> = ({ listCollection }) => {
             return (
               <div key={flag} className={styles.country_list__single_country}>
                 <Flag svg={flags.svg} alt={flags.alt} width="50%" />
-                <b className={styles.country_list__name}>{name.common}</b>
+                <Typography className={styles.country_list__name}>{name.common}</Typography>
                 <Typography className={styles.country_list__population}>
                   {population}
                 </Typography>
