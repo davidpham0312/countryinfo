@@ -1,0 +1,6 @@
+.country_detail__container{
+  display: grid;
+  padding: 20px;
+  border: 2px solid black;
+  margin: 40px;
+}

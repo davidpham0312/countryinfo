@@ -6,7 +6,7 @@ country_list__container {
 
 .country_list__title {
   display: grid;
-  grid-template-columns: 150px repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   border-radius: 10px;
   border: 1px solid black;
   margin-bottom: 20px;
@@ -15,7 +15,7 @@ country_list__container {
 
 .country_list__single_country {
   display: grid;
-  grid-template-columns: 150px repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   background-color: #00ffff;
   border-radius: 10px;
   border: 2px solid black;
@@ -29,24 +29,10 @@ country_list__container {
   justify-content: center;
 }
 
-.country_list__name_ascending,
 .country_list__name,
 .country_list__flag,
 .country_list__region,
 .country_list__population {
   display: flex;
   align-items: center;
-}
-
-.country_list__name_ascending {
-  background-color: green;
-}
-.country_list__name_ascending:before {
-  content: " ";
-  height: 0;
-  position: absolute;
-  width: 0;
-  left: 500px;
-  border: 10px solid transparent;
-  border-top-color: black;
 }
