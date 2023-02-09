@@ -5,7 +5,7 @@ import { CountryContext } from "../CountryContext/CountryContext";
 import { Flag } from "../Flag";
 import styles from "./countryDetail.module.css";
 export const CountryDetail = (): ReactElement => {
-  const [countries, setCountries] = useContext(CountryContext);
+  const [countries] = useContext(CountryContext);
   const { name } = useParams();
   const countryDetail = countries.find(
     (country: { name: { official: string | undefined } }) =>

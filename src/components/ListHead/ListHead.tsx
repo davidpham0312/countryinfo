@@ -1,4 +1,4 @@
-import { Button, Card, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import SortIcon from "@mui/icons-material/Sort";
 import styles from "./listHead.module.css";
 export const ListHead = ({ nameButtonClicked, nameAscending }: any) => {
