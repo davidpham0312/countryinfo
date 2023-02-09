@@ -1,88 +1,70 @@
 import React, { useState } from "react";
+import { IconButton, Card, Typography } from "@mui/material";
+
 import { CountryListProps } from "../../types";
 import styles from "./countryList.module.css";
+import { Search } from "../Search";
+import classNames from "classnames";
+import { ListHead } from "../ListHead/ListHead";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { Flag } from "../Flag";
 
-function isCharsIncluded(searchString: string, targetString: string) {
-  return searchString
+const isSearchFound = (searchString: string, targetString: string) => {
+  return targetString
     .toLocaleLowerCase()
-    .split("")
-    .every((char) => targetString.toLocaleLowerCase().includes(char));
-}
+    .includes(searchString.toLocaleLowerCase());
+};
 
 export const CountryList: React.FC<CountryListProps> = ({ listCollection }) => {
   const countryList = listCollection ?? [];
+
   const [search, setSearch] = useState("");
-  const [countryAscending, setCountryAscending] = useState(1);
-  const [populationAscending, setPopulationAscending] = useState(0);
+  const [nameAscending, setNameAscending] = useState(true);
 
-  function nameButtonClicked() {
-    setPopulationAscending(0);
-    countryAscending === 0 || countryAscending === -1
-      ? setCountryAscending(1)
-      : setCountryAscending(-1);
-  }
+  const nameButtonClicked = () => {
+    nameAscending ? setNameAscending(false) : setNameAscending(true);
+  };
 
-  function populationButtonClicked() {
-    setCountryAscending(0);
-    populationAscending === 0 || populationAscending === -1
-      ? setPopulationAscending(1)
-      : setPopulationAscending(-1);
-  }
-
-  if (countryAscending === 1)
-    countryList.sort((a, b) =>
-      a.name.common > b.name.common ? 1 : b.name.common > a.name.common ? -1 : 0
-    );
-  else if (countryAscending === -1)
-    countryList.sort((a, b) =>
-      b.name.common > a.name.common ? 1 : a.name.common > b.name.common ? -1 : 0
-    );
-
-    if (populationAscending === 1)
-    countryList.sort((a, b) =>
-      a.population > b.population ? 1 : b.population > a.population ? -1 : 0
-    );
-  else if (populationAscending === -1)
-    countryList.sort((a, b) =>
-      b.population > a.population ? 1 : a.population > b.population ? -1 : 0
-    );
+  nameAscending
+    ? countryList.sort((a, b) =>
+        a.name.common > b.name.common
+          ? 1
+          : b.name.common > a.name.common
+          ? -1
+          : 0
+      )
+    : countryList.sort((a, b) =>
+        b.name.common > a.name.common
+          ? 1
+          : a.name.common > b.name.common
+          ? -1
+          : 0
+      );
   const handleChange = (e: { target: { value: string } }) => {
     setSearch(e.target.value);
   };
+
   return (
     <ul className={styles.country_list__container}>
-      <input
-        type="text"
-        onChange={handleChange}
-        placeholder="Search by country name..."
-        className={styles.country_list__search}
+      <Search handleChange={handleChange} />
+      <ListHead
+        className={styles.country_list__title}
+        nameButtonClicked={nameButtonClicked}
+        nameAscending={nameAscending}
       />
-      <li className={styles.country_list__title}>
-        <div className={styles.country_list__flag}>Flag</div>
-        <button
-          onClick={nameButtonClicked}
-          className={styles.country_list__name}
-        >
-          Name
-        </button>
-        <button className={styles.country_list__region}>Region</button>
-        <button onClick={populationButtonClicked} className={styles.country_list__population}>Population</button>
-      </li>
+
       {countryList.map(({ name, flag, population, region, flags }) => {
-        if (isCharsIncluded(search, name.common)) {
+        if (isSearchFound(search, name.common)) {
           return (
-            <li key={flag} className={styles.country_list__single_country}>
-              <img
-                src={flags.png}
-                alt={flags.alt ? flags.alt : ""}
-                className={styles.country_list__flag}
-              />
+            <Card key={flag} className={styles.country_list__single_country}>
+              <Flag png={flags.png} alt={flags.alt} width="100px"/>
               <b className={styles.country_list__name}>{name.common}</b>
-              <div className={styles.country_list__region}>{region}</div>
-              <div className={styles.country_list__population}>
+              <Typography className={styles.country_list__population}>
                 {population}
-              </div>
-            </li>
+              </Typography>
+              <Typography className={styles.country_list__region}>{region}</Typography>
+              <IconButton href={"/" + name.official}><KeyboardArrowRightIcon/></IconButton>
+            </Card>
           );
         }
         return null;

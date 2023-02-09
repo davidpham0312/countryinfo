@@ -1,0 +1,6 @@
+.flag {
+  display: flex;
+  aspect-ratio: 16 / 9;
+  justify-content: center;
+  align-items: center;
+}

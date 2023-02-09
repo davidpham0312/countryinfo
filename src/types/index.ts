@@ -20,6 +20,6 @@ export type CountryLanguageProps= {
 }
 export interface CountryFlagProps {
   png: string,
-  svg: string,
   alt: string,
+  width: string
 }
