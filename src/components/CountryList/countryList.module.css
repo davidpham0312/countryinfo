@@ -42,7 +42,7 @@ country_list__container {
   background-color: green;
 }
 .country_list__name_ascending:before {
-  content: ' ';
+  content: " ";
   height: 0;
   position: absolute;
   width: 0;

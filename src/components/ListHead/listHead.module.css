@@ -17,3 +17,11 @@
   border-radius: 20px;
   width:fit-content;
 }
+
+.list_head__flag,
+.list_head__name,
+.list_head__population,
+.list_head__region {
+  display: flex;
+  align-items: center;
+}

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { IconButton, Card, Typography } from "@mui/material";
+import {
+  IconButton,
+  Typography,
+  List,
+  Pagination,
+} from "@mui/material";
 
 import { CountryListProps } from "../../types";
 import styles from "./countryList.module.css";
 import { Search } from "../Search";
-import classNames from "classnames";
 import { ListHead } from "../ListHead/ListHead";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { Flag } from "../Flag";
@@ -40,35 +44,63 @@ export const CountryList: React.FC<CountryListProps> = ({ listCollection }) => {
           ? -1
           : 0
       );
-  const handleChange = (e: { target: { value: string } }) => {
+  const handleSearchChange = (e: { target: { value: string } }) => {
     setSearch(e.target.value);
   };
 
+  const itemsPerPage = 5;
+  const [page, setPage] = React.useState(1);
+  const noOfPages = countryList.length / itemsPerPage;
+  const handlePageChange = (event: any, value: any) => {
+    setPage(value);
+  };
   return (
-    <ul className={styles.country_list__container}>
-      <Search handleChange={handleChange} />
-      <ListHead
-        className={styles.country_list__title}
-        nameButtonClicked={nameButtonClicked}
-        nameAscending={nameAscending}
-      />
+    <>
+      <List className={styles.country_list__container}>
+        <Search handleChange={handleSearchChange} />
+        <ListHead
+          className={styles.country_list__title}
+          nameButtonClicked={nameButtonClicked}
+          nameAscending={nameAscending}
+        />
 
-      {countryList.map(({ name, flag, population, region, flags }) => {
-        if (isSearchFound(search, name.common)) {
-          return (
-            <Card key={flag} className={styles.country_list__single_country}>
-              <Flag png={flags.png} alt={flags.alt} width="100px"/>
-              <b className={styles.country_list__name}>{name.common}</b>
-              <Typography className={styles.country_list__population}>
-                {population}
-              </Typography>
-              <Typography className={styles.country_list__region}>{region}</Typography>
-              <IconButton href={"/" + name.official}><KeyboardArrowRightIcon/></IconButton>
-            </Card>
-          );
-        }
-        return null;
-      })}
-    </ul>
+        {countryList
+          .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+          .map(({ name, flag, population, region, flags }) => {
+            if (isSearchFound(search, name.common)) {
+              return (
+                <div key={flag} className={styles.country_list__single_country}>
+                  <Flag png={flags.png} alt={flags.alt} width="100px" />
+                  <b className={styles.country_list__name}>{name.common}</b>
+                  <Typography className={styles.country_list__population}>
+                    {population}
+                  </Typography>
+                  <Typography className={styles.country_list__region}>
+                    {region}
+                  </Typography>
+                  <IconButton
+                    color="primary"
+                    href={"/" + name.official}
+                    className={styles.country_list__country_button}
+                  >
+                    <KeyboardArrowRightIcon />
+                  </IconButton>
+                </div>
+              );
+            }
+            return null;
+          })}
+      </List>
+      <Pagination
+        count={noOfPages}
+        page={page}
+        onChange={handlePageChange}
+        defaultPage={1}
+        color="primary"
+        size="large"
+        showFirstButton
+        showLastButton
+      />
+    </>
   );
 };

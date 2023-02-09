@@ -1,45 +1,34 @@
-import PageLink from '../PageLink/PageLink';
-import './Pagination.css';
 
-export type Props = {
-  currentPage: number;
-  lastPage: number;
-  maxLength: number;
-  setCurrentPage: (page: number) => void;
-};
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 
-export default function Pagination({
-  currentPage,
-  lastPage,
-  maxLength,
-}: Props) {
-  const baseUrl = 'https://example.com/posts';
-  const pageNums = [1, 2, 3];
-
+function Content() {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  console.log(location)
+  const page = parseInt(query.get('page') || '1', 10);
   return (
-    <nav className="pagination" aria-label="Pagination">
-      <PageLink
-        href={`${baseUrl}/${currentPage - 1}`}
-        disabled={currentPage === 1}
-      >
-        Previous
-      </PageLink>
-      {pageNums.map((pageNum, idx) => (
-        <PageLink
-          key={idx}
-          href={`${baseUrl}/${pageNum}`}
-          active={currentPage === pageNum}
-          disabled={isNaN(pageNum)}
-        >
-          {pageNum}
-        </PageLink>
-      ))}
-      <PageLink
-        href={`${baseUrl}/${currentPage + 1}`}
-        disabled={currentPage === lastPage}
-      >
-        Next
-      </PageLink>
-    </nav>
+    <Pagination
+      page={page}
+      count={10}
+      renderItem={(item) => (
+        <PaginationItem
+          component={Link}
+          to={`/inbox${item.page === 1 ? '' : `?page=${item.page}`}`}
+          {...item}
+        />
+      )}
+    />
+  );
+}
+
+export default function PaginationLink() {
+  return (
+    <MemoryRouter initialEntries={['/inbox']} initialIndex={0}>
+      <Routes>
+        <Route path="*" element={<Content />} />
+      </Routes>
+    </MemoryRouter>
   );
 }
